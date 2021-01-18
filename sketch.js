@@ -6,11 +6,12 @@ const Body = Matter.Body;
 const Render = Matter.Render;
 const Constraint=Matter.Constraint;
 var treeObj, stoneObj,groundObject, launcherObject;
-var mango1,constraint;
+var mango1,COnstraint;
 var world,boy;
 
 function preload(){
 	boy=loadImage("boy.png");
+	stoneObj=loadImage("stone.png");
   }
 
 function setup() {
@@ -22,20 +23,21 @@ function setup() {
 
 	treeObj=new tree(1050,580);
 	groundObject=new ground(width/2,600,width,20);
-	constraint = new Constraint(300,150)
-	Engine.run(engine);
+	COnstraint = new constraint(stoneObj,{x:300,y:300});
+	//Engine.run(engine);
 
 }
 
 function draw() {
 
   background(230);
+  Engine.update(engine);
   //Add code for displaying text here!
   image(boy ,200,340,200,300);
   
-
+  stoneObj.display();
   treeObj.display();
   mango1.display();
-
+  COnstraint.display();
   groundObject.display();
 }
