@@ -6,11 +6,11 @@ const Body = Matter.Body;
 const Render = Matter.Render;
 const Constraint=Matter.Constraint;
 var treeObj, stoneObj,groundObject, launcherObject;
-var mango1;
+var mango1,constraint;
 var world,boy;
 
 function preload(){
-	boy=loadImage("images/boy.png");
+	boy=loadImage("boy.png");
   }
 
 function setup() {
@@ -22,7 +22,7 @@ function setup() {
 
 	treeObj=new tree(1050,580);
 	groundObject=new ground(width/2,600,width,20);
-	
+	constraint = new Constraint(300,150)
 	Engine.run(engine);
 
 }
