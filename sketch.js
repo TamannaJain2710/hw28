@@ -4,14 +4,14 @@ const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 const Render = Matter.Render;
-const Constraint=Matter.Constraint;
+const Constraint = Matter.Constraint;
 var treeObj, stoneObj,groundObject, launcherObject;
 var mango1,COnstraint;
 var world,boy;
 
 function preload(){
 	boy=loadImage("boy.png");
-	stoneObj=loadImage("stone.png");
+	
   }
 
 function setup() {
@@ -23,7 +23,9 @@ function setup() {
 
 	treeObj=new tree(1050,580);
 	groundObject=new ground(width/2,600,width,20);
-	COnstraint = new constraint(stoneObj,{x:300,y:300});
+	stoneObj = new Stone(300,300,10,5);
+	COnstraint = new SlingShot(stoneObj.body,{x:300,y:300});
+	
 	//Engine.run(engine);
 
 }

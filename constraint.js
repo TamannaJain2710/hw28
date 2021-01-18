@@ -1,4 +1,4 @@
-class constraint{
+class SlingShot{
     constructor(bodyA, pointB){
         var options = {
             bodyA: bodyA,
@@ -7,16 +7,20 @@ class constraint{
             length: 10
         }
 
-        this.constraint = Constraint.create(options);
-        World.add(world, this.constraint);
+        this.sling = Constraint.create(options);
+        World.add(world, this.sling);
     }
 
     display(){
-        if(this.constraint.bodyA){
-        var pointA = this.constraint.bodyA.position;
-        var pointB = this.constraint.pointB;
+        if(this.sling.bodyA){
+        var pointA = this.sling.bodyA.position;
+        var pointB = this.sling.pointB;
         strokeWeight(4);
         line(pointA.x, pointA.y, pointB.x, pointB.y);
         }
+    }
+   fly() {
+        this.sling.bodyA = null
+        
     }
 }
