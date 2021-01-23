@@ -1,60 +1,109 @@
+
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 const Constraint = Matter.Constraint;
-const Render = Matter.Render;
+var boy, stone, mango1, mango2, mango3, mango4, mango5, mango6, mango7, mango8, mango9, ground,hold, tree;
 
-var engine, world;
-var treeObj, stone,groundObject, launcherObject;
-var mango1,mango2,mango3,mango4,mango5,mango6;
-var elastic;
-var boy;
 
-function preload(){
-	boy = loadImage("boy.png");
-	
-  }
-
-function setup() {
-	createCanvas(1300, 600);
-	  engine = Engine.create();
-    world = engine.world
-
-  mango1=new mango(1200,120,30);
-  mango2=new mango(1100,200,30);
-  mango3=new mango(1050,80,30);
-  mango4=new mango(950,150,30);
-  mango5=new mango(970,270,30);
-  mango6=new mango(1200,270,30);
-
-	treeObj=new tree(1050,580);
-	groundObject=new ground(width/2,600,width,20);
-	
-	  stone = new Stone(300,300,10,5);
-   // elastic =  new SlingShot(stone.body, {x:280 , y:575});
-	
-	Engine.run(engine);
-
+function preload()
+{
+	boyImage = loadImage("  boy.png");
+	treeImage = loadImage("  tree.png");
 }
 
-function draw() {
+function setup() {
+	createCanvas(1520, 780);
 
-  background(230);
-  Engine.update(engine);
-  //Add code for displaying text here!
-  image(boy ,200,340,200,300);
+
+	engine = Engine.create();
+	world = engine.world;
+
+	boy = createSprite(350,660,20,20);
+	boy.addImage(boyImage);
+	boy.scale = 0.15;
+	tree = createSprite(1200,420,600,600);
+	tree.addImage(treeImage);
+	tree.scale = 0.5;
+
+	ground = new Ground(750,760,width,20);
+	stone = new Stone(280,575,60);
+	hold = new SlingShot(stone.body, {x:280 , y:575});
+	mango1 = new Mango(1300,300,60);
+	mango2 = new Mango(1180,230,60);
+	mango3 = new Mango(1340,180,60);
+	mango4 = new Mango(1380,390,60);
+	mango5 = new Mango(1000,320,60);
+	mango6 = new Mango(1190,340,60);
+	mango7 = new Mango(1250,170,60);
+	mango8 = new Mango(1420,310,60);
+	mango9 = new Mango(1080,340,60);
+
+
+	Engine.run(engine);
   
-  stone.display();
-  treeObj.display();
-  treeObj.depth = mango5.depth
-  treeObj.depth = treeObj.depth - 1
+}
+
+
+function draw() {
+  rectMode(CENTER);
+  background(219,219,219);
+  textSize(40);
+  text("Press Space to get a Second Chance to Play!!!",100,100)
+  drawSprites();
+  ground.display();
   mango1.display();
   mango2.display();
   mango3.display();
   mango4.display();
   mango5.display();
   mango6.display();
-  groundObject.display();
-  //elastic.display();  
+  mango7.display();
+  mango8.display();
+  mango9.display();
+  hold.display();
+  stone.display();
+
+  detectCollision(stone,mango1);
+  detectCollision(stone,mango2);
+  detectCollision(stone,mango3);
+  detectCollision(stone,mango4);
+  detectCollision(stone,mango5);
+  detectCollision(stone,mango6);
+  detectCollision(stone,mango7);
+  detectCollision(stone,mango8);
+  detectCollision(stone,mango9);
+
 }
+
+function mouseDragged(){
+    Matter.Body.setPosition(stone.body,{x: mouseX, y: mouseY});
+}
+
+function mouseReleased(){
+    hold.fly();
+}
+
+function detectCollision(lstone, lmango)
+{
+ mangoBodyPosition = lmango.body.position
+ stoneBodyPosition = lstone.body.position
+
+  var distance = dist(stoneBodyPosition.x, stoneBodyPosition.y,mangoBodyPosition.x, mangoBodyPosition.y)
+  
+  if(distance<=lmango.r+lstone.r)
+  {
+	  Matter.Body.setStatic(lmango.body, false);
+  }
+
+}
+
+function keyPressed(){
+	if(keyCode === 32) {
+		Matter.Body.setPosition(stone.body, {x:280, y:575})
+		hold.attach(stone.body);
+	}
+}
+
+
